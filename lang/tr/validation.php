@@ -12,6 +12,8 @@ return [
     'image' => ':attribute bir görsel olmalıdır.',
     'mimes' => ':attribute şu türlerden biri olmalıdır: :values.',
     'integer' => ':attribute tam sayı olmalıdır.',
+    'file' => ':attribute geçerli bir dosya olmalıdır.',
+    'uploaded' => ':attribute yüklenemedi (boyutu sunucu sınırını aşıyor olabilir).',
     'url' => ':attribute geçerli bir bağlantı olmalıdır.',
     'in' => 'Seçilen :attribute geçersiz.',
     'current_password' => 'Mevcut şifre yanlış.',

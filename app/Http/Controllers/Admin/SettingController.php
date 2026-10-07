@@ -97,7 +97,15 @@ class SettingController extends Controller
             };
         }
         $request->validate($rules, [], collect($fields)->map(fn ($f) => $f[0])->all());
-        $request->validate(['upload.*' => ['nullable', 'file', 'max:20480']]);
+        $request->validate([
+            'upload.*' => ['nullable'],
+            'upload.*.*' => ['nullable', 'file', 'max:20480'],
+        ], [], ['upload.*.*' => 'Yüklenen dosya']);
+        foreach ($fields as $key => $f) {
+            if (in_array($f[1], ['image', 'video']) && ($file = $request->file("upload.$key")) && ! $file->isValid()) {
+                return back()->withErrors(["upload.$key" => 'Dosya yüklenemedi (boyutu sunucu sınırını aşıyor olabilir).']);
+            }
+        }
 
         foreach ($fields as $key => $f) {
             $type = $f[1];
