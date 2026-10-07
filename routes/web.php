@@ -24,6 +24,8 @@ Route::get('/basinda-biz', [PostController::class, 'press'])->name('press');
 
 Route::post('/talep', [LeadController::class, 'store'])->middleware('throttle:6,1')->name('lead.store');
 
+Route::get('/kur', [\App\Http\Controllers\InstallController::class, 'run']);
+
 Route::get('/sitemap.xml', [SeoController::class, 'sitemap']);
 Route::get('/robots.txt', [SeoController::class, 'robots']);
 

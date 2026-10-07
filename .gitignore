@@ -28,3 +28,4 @@ Thumbs.db
 
 # Panelden yüklenen dosyalar (eski siteden aktarılan uploads/eski hariç)
 /public/uploads/20*/
+/release
