@@ -13,6 +13,8 @@ rsync -a --exclude='.git' --exclude='.github' --exclude='node_modules' --exclude
   --exclude='database/*.sqlite*' --exclude='*.md' --exclude='phpunit.xml' --exclude='package.json' --exclude='vite.config.js' \
   --exclude='.styleci.yml' --exclude='.editorconfig' --exclude='.gitattributes' --exclude='.npmrc' --exclude='tools' --exclude='bootstrap/cache/*.php' ./ "$OUT/laravel/"
 mkdir -p "$OUT/laravel/storage/"{app/public,framework/{cache/data,sessions,views},logs} "$OUT/laravel/bootstrap/cache"
+# Bazı zip açıcılar boş klasörleri atlar; her klasöre yer tutucu dosya koy
+for d in "$OUT/laravel/storage/app/public" "$OUT/laravel/storage/framework/cache/data" "$OUT/laravel/storage/framework/sessions" "$OUT/laravel/storage/framework/views" "$OUT/laravel/storage/logs" "$OUT/laravel/bootstrap/cache"; do echo "yer tutucu" > "$d/bos.txt"; done
 
 # 2) Üretim bağımlılıkları (geliştirme paketleri olmadan)
 cp composer.json composer.lock "$OUT/laravel/"
