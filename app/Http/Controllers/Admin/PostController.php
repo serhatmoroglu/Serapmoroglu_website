@@ -48,8 +48,8 @@ class PostController extends Controller
     {
         $kind = $item->kind;
         $data = $request->validate([
-            'title' => ['required', 'string', 'max:220'],
-            'slug' => ['nullable', 'string', 'max:200', 'regex:/^[a-z0-9-]+$/', Rule::unique('posts', 'slug')->ignore($item->id)],
+            'title' => ['required', 'string', 'max:190'],
+            'slug' => ['nullable', 'string', 'max:190', 'regex:/^[a-z0-9-]+$/', Rule::unique('posts', 'slug')->ignore($item->id)],
             'excerpt' => ['nullable', 'string', 'max:600'],
             'body' => ['nullable', 'string'],
             'external_url' => [$kind === 'gazete' ? 'required' : 'nullable', 'url', 'max:500'],
