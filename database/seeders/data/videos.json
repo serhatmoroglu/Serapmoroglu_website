@@ -1,0 +1,18 @@
+[
+ {
+  "kind": "video",
+  "title": "DR Serap Özdamar & Didar Üstün ile Çocuklarda Diş Travmaları",
+  "slug": "dr-serap-ozdamar-didar-ustun-ile-cocuklarda-dis-travmalari",
+  "image": "uploads/eski/IMG-20251019-WA0853-scaled.jpg",
+  "video_url": "https://youtu.be/-dqp0ZuRcEA",
+  "sort": 1
+ },
+ {
+  "kind": "video",
+  "title": "DR Serap Özdamar Zahide Yetiş ile Ağız ve Diş Sağlığı Programı",
+  "slug": "dr-serap-ozdamar-zahide-yetis-ile-agiz-ve-dis-sagligi-programi",
+  "image": "uploads/eski/IMG-20251019-WA0852-scaled.jpg",
+  "video_url": "https://youtu.be/isU0g4x-B2c",
+  "sort": 2
+ }
+]
