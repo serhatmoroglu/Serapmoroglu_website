@@ -1,0 +1,334 @@
+<title>Tasarım Önerileri</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=DM+Sans:wght@400;500;700&family=Figtree:wght@400;500;700&family=Fraunces:opsz,wght@9..144,400;9..144,600&display=swap">
+<style>
+/* Düzen: iki ana sayfa önerisi sekmeli. A = açık ve sakin, bölünmüş hero + tedavi dizini. B = koyu lacivert tam ekran hero + gruplu tedavi kartları. */
+:root{
+  --photo:url("data:image/jpeg;base64,__PHOTO__");
+  --bar-bg:#0e1b24; --bar-fg:#e8f0f3; --bar-on:#ffffff; --bar-on-fg:#0e1b24;
+  /* A */
+  --a-bg:#f2f7f7; --a-surface:#ffffff; --a-ink:#12303a; --a-mute:#566f78; --a-line:#d3e2e3; --a-accent:#17857d; --a-accent-ink:#ffffff; --a-soft:#dcefed; --a-warm:#f0b95a;
+  /* B */
+  --b-bg:#f6f4fc; --b-surface:#ffffff; --b-ink:#101d4b; --b-mute:#5b6285; --b-line:#dcd8ef; --b-navy:#0f1d4a; --b-navy-ink:#f1eefc; --b-accent:#5fd3bc; --b-accent-ink:#06291f; --b-lav:#e7dffb;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bar-bg:#e8f0f3; --bar-fg:#0e1b24; --bar-on:#0e1b24; --bar-on-fg:#e8f0f3;
+  --a-bg:#0d1c21; --a-surface:#142a31; --a-ink:#e6f1f2; --a-mute:#92aab1; --a-line:#23424a; --a-accent:#4ec3b8; --a-accent-ink:#06211e; --a-soft:#17383d; --a-warm:#f0b95a;
+  --b-bg:#0b1233; --b-surface:#121b46; --b-ink:#ece9fb; --b-mute:#9aa2cc; --b-line:#27316a; --b-navy:#070d28; --b-lav:#1b2459;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bar-bg:#e8f0f3; --bar-fg:#0e1b24; --bar-on:#0e1b24; --bar-on-fg:#e8f0f3;
+  --a-bg:#0d1c21; --a-surface:#142a31; --a-ink:#e6f1f2; --a-mute:#92aab1; --a-line:#23424a; --a-accent:#4ec3b8; --a-accent-ink:#06211e; --a-soft:#17383d; --a-warm:#f0b95a;
+  --b-bg:#0b1233; --b-surface:#121b46; --b-ink:#ece9fb; --b-mute:#9aa2cc; --b-line:#27316a; --b-navy:#070d28; --b-lav:#1b2459;
+  color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--a-bg);color:var(--a-ink);font-family:"Figtree",system-ui,sans-serif;font-size:16px;line-height:1.55}
+body.is-b{background:var(--b-bg);color:var(--b-ink)}
+a{color:inherit}
+h1,h2,h3,p{margin:0}
+.wrap{max-width:1120px;margin-inline:auto;padding-inline:16px}
+
+/* Sekme çubuğu */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bar-bg);color:var(--bar-fg);font:500 14px/1.3 "DM Sans",system-ui,sans-serif}
+.bar .wrap{display:flex;align-items:center;gap:12px;padding-block:10px;flex-wrap:wrap}
+.bar b{font-weight:700;margin-right:auto}
+.bar button{font:inherit;cursor:pointer;border:1px solid color-mix(in srgb,var(--bar-fg) 35%,transparent);background:transparent;color:var(--bar-fg);padding:7px 14px;border-radius:99px}
+.bar button[aria-pressed="true"]{background:var(--bar-on);color:var(--bar-on-fg);border-color:var(--bar-on)}
+:focus-visible{outline:3px solid var(--a-accent);outline-offset:2px}
+[hidden]{display:none!important}
+
+/* ============ TASARIM A ============ */
+.a h1,.a h2,.a h3{font-family:"Fraunces",Georgia,serif;font-weight:400;letter-spacing:-.01em;text-wrap:balance}
+.a .top{display:flex;align-items:center;gap:20px;padding-block:18px}
+.a .logo{font-family:"Fraunces",Georgia,serif;font-size:20px;margin-right:auto;line-height:1.1}
+.a .logo small{display:block;font:500 12px "Figtree",sans-serif;color:var(--a-mute);letter-spacing:.04em}
+.a nav{display:flex;gap:22px;font-size:15px;font-weight:500}
+.a nav a{text-decoration:none;color:var(--a-mute)}
+.a nav a:hover{color:var(--a-ink)}
+.a .call{background:var(--a-accent);color:var(--a-accent-ink);text-decoration:none;font-weight:700;padding:10px 18px;border-radius:99px;font-size:15px;white-space:nowrap}
+@media(max-width:820px){.a nav{display:none}}
+
+.a .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding-block:28px 56px}
+.a .eyebrow{font:700 12px "Figtree",sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--a-accent)}
+.a h1{font-size:clamp(38px,5.6vw,66px);line-height:1.04;margin-top:14px}
+.a h1 em{font-style:italic;color:var(--a-accent)}
+.a .lead{margin-top:20px;max-width:46ch;font-size:18px;color:var(--a-mute)}
+.a .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.a .btn{display:inline-block;text-decoration:none;font-weight:700;padding:14px 24px;border-radius:99px;background:var(--a-ink);color:var(--a-bg)}
+.a .btn.ghost{background:transparent;color:var(--a-ink);border:1.5px solid var(--a-line)}
+.a .portrait{position:relative;aspect-ratio:4/5;border-radius:220px 220px 28px 28px;background:var(--photo) 68% 22%/cover;max-width:460px;width:100%;justify-self:end}
+.a .chip{position:absolute;background:var(--a-surface);color:var(--a-ink);border-radius:16px;padding:12px 16px;font-size:14px;line-height:1.35;box-shadow:0 12px 30px -12px rgba(10,40,45,.35)}
+.a .chip b{display:block;font-size:15px}
+.a .chip.c1{left:-26px;bottom:60px}
+.a .chip.c2{right:-8px;top:46%}
+@media(max-width:820px){.a .hero{grid-template-columns:1fr}.a .portrait{justify-self:center;border-radius:160px 160px 24px 24px}.a .chip.c1{left:8px;bottom:18px}.a .chip.c2{display:none}}
+
+.a .quick{background:var(--a-surface);border:1px solid var(--a-line);border-radius:22px;padding:22px;display:grid;grid-template-columns:1.2fr 1.2fr 1.4fr auto;gap:12px;align-items:end;margin-bottom:72px}
+.a .quick h2{grid-column:1/-1;font-size:22px}
+.a label{display:grid;gap:6px;font-size:13px;font-weight:700;color:var(--a-mute)}
+.a input,.a select{font:inherit;color:var(--a-ink);background:var(--a-bg);border:1px solid var(--a-line);border-radius:12px;padding:12px 14px;width:100%;min-width:0}
+.a .quick button{font:700 16px "Figtree",sans-serif;background:var(--a-accent);color:var(--a-accent-ink);border:0;border-radius:12px;padding:13px 22px;cursor:pointer}
+@media(max-width:820px){.a .quick{grid-template-columns:1fr}}
+
+.a section.tx h2{font-size:clamp(30px,4vw,44px)}
+.a .tx-head{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap;margin-bottom:22px}
+.a .tx-head p{color:var(--a-mute);max-width:40ch}
+.a .idx{list-style:none;margin:0;padding:0;border-top:1px solid var(--a-line)}
+.a .idx li{display:grid;grid-template-columns:48px 1fr 1.3fr 24px;gap:16px;align-items:baseline;padding:18px 4px;border-bottom:1px solid var(--a-line)}
+.a .idx a{display:contents;text-decoration:none}
+.a .idx .n{font:500 13px "Figtree",sans-serif;color:var(--a-mute);font-variant-numeric:tabular-nums}
+.a .idx .t{font:400 22px/1.2 "Fraunces",Georgia,serif}
+.a .idx .d{color:var(--a-mute);font-size:15px}
+.a .idx .ar{color:var(--a-accent);font-weight:700}
+.a .idx li:hover .t{color:var(--a-accent)}
+@media(max-width:700px){.a .idx li{grid-template-columns:34px 1fr 20px}.a .idx .d{display:none}}
+
+.a .about{margin-top:88px;background:var(--a-soft);border-radius:28px;padding:clamp(24px,5vw,56px);display:grid;grid-template-columns:.8fr 1.2fr;gap:36px;align-items:center}
+.a .about .pic{aspect-ratio:1;border-radius:22px;background:var(--photo) 70% 24%/190%;max-width:340px;width:100%}
+.a .about h2{font-size:clamp(28px,3.6vw,40px)}
+.a .about p{margin-top:14px;color:var(--a-mute);max-width:56ch}
+.a .facts{display:flex;gap:28px;flex-wrap:wrap;margin-top:22px}
+.a .facts div{font-size:14px;color:var(--a-mute)}
+.a .facts b{display:block;font:400 28px "Fraunces",Georgia,serif;color:var(--a-ink)}
+@media(max-width:820px){.a .about{grid-template-columns:1fr}}
+
+.a .visit{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-block:72px}
+.a .visit h2{font-size:28px;margin-bottom:12px}
+.a .visit dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:8px 18px;font-size:16px}
+.a .visit dt{color:var(--a-mute)}
+.a .visit dd{margin:0}
+.a .map{border-radius:22px;border:1px dashed var(--a-line);min-height:200px;display:grid;place-items:center;text-align:center;padding:20px;color:var(--a-mute);font-size:14px;background:var(--a-surface)}
+@media(max-width:820px){.a .visit{grid-template-columns:1fr}}
+.a footer{border-top:1px solid var(--a-line);padding-block:22px 30px;font-size:13px;color:var(--a-mute);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+/* ============ TASARIM B ============ */
+.b h1,.b h2,.b h3{font-family:"Bricolage Grotesque","DM Sans",system-ui,sans-serif;font-weight:700;letter-spacing:-.02em;text-wrap:balance}
+.b{font-family:"DM Sans",system-ui,sans-serif}
+.b .hero{position:relative;background:var(--b-navy);color:var(--b-navy-ink);overflow:hidden}
+.b .hero::before{content:"";position:absolute;inset:0;background:var(--photo) 72% 22%/cover;opacity:.9}
+.b .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--b-navy) 8%,color-mix(in srgb,var(--b-navy) 78%,transparent) 48%,transparent 82%)}
+@media(max-width:820px){.b .hero::before{background-position:78% 12%}.b .hero::after{background:linear-gradient(180deg,color-mix(in srgb,var(--b-navy) 35%,transparent) 0%,var(--b-navy) 78%)}}
+.b .hero .wrap{position:relative;z-index:1}
+.b .top{display:flex;align-items:center;gap:22px;padding-block:20px}
+.b .logo{font:700 18px "Bricolage Grotesque",sans-serif;margin-right:auto;display:flex;gap:10px;align-items:center}
+.b .logo i{width:30px;height:30px;border-radius:9px;background:var(--b-accent);display:inline-block}
+.b nav{display:flex;gap:22px;font-size:15px;font-weight:500;opacity:.9}
+.b nav a{text-decoration:none}
+.b .call{border:1.5px solid color-mix(in srgb,var(--b-navy-ink) 45%,transparent);text-decoration:none;padding:9px 16px;border-radius:10px;font-weight:700;font-size:15px;white-space:nowrap}
+@media(max-width:820px){.b nav{display:none}}
+.b .copy{padding-block:clamp(60px,12vw,150px) clamp(60px,9vw,110px);max-width:620px}
+.b .tag{display:inline-block;background:color-mix(in srgb,var(--b-accent) 18%,transparent);color:var(--b-accent);font-weight:700;font-size:13px;padding:6px 12px;border-radius:99px}
+.b h1{font-size:clamp(40px,6.4vw,80px);line-height:1;margin-top:18px}
+.b .lead{margin-top:20px;max-width:44ch;font-size:18px;opacity:.86}
+.b .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+.b .btn{display:inline-block;text-decoration:none;font-weight:700;padding:15px 26px;border-radius:12px;background:var(--b-accent);color:var(--b-accent-ink)}
+.b .btn.ghost{background:transparent;color:inherit;border:1.5px solid color-mix(in srgb,var(--b-navy-ink) 45%,transparent)}
+
+.b .strip{background:var(--b-lav);color:var(--b-ink)}
+.b .strip .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:8px 24px;padding-block:22px}
+.b .strip div{font-size:14px;color:var(--b-mute)}
+.b .strip b{display:block;font:700 19px "Bricolage Grotesque",sans-serif;color:var(--b-ink)}
+@media(max-width:820px){.b .strip .wrap{grid-template-columns:1fr 1fr}}
+
+.b .group{margin-top:64px}
+.b .group h2{font-size:clamp(28px,3.6vw,42px)}
+.b .group > p{color:var(--b-mute);margin-top:8px;max-width:52ch}
+.b .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin-top:20px}
+.b .tile{display:flex;flex-direction:column;gap:6px;background:var(--b-surface);border:1px solid var(--b-line);border-radius:16px;padding:18px;text-decoration:none;min-height:104px}
+.b .tile b{font:700 18px/1.2 "Bricolage Grotesque",sans-serif}
+.b .tile span{font-size:14px;color:var(--b-mute)}
+.b .tile:hover{border-color:var(--b-ink)}
+
+.b .doc{margin-top:80px;display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:24px;overflow:hidden;background:var(--b-navy);color:var(--b-navy-ink)}
+.b .doc .pic{min-height:360px;background:var(--photo) 68% 20%/cover}
+.b .doc .txt{padding:clamp(24px,5vw,56px);display:flex;flex-direction:column;gap:14px;justify-content:center}
+.b .doc h2{font-size:clamp(26px,3.4vw,40px)}
+.b .doc p{opacity:.85;max-width:50ch}
+.b .doc q{font:500 20px/1.35 "Bricolage Grotesque",sans-serif;color:var(--b-accent);quotes:"“" "”"}
+@media(max-width:820px){.b .doc{grid-template-columns:1fr}.b .doc .pic{min-height:300px}}
+
+.b .form{margin-top:64px;background:var(--b-surface);border:1px solid var(--b-line);border-radius:24px;padding:clamp(20px,4vw,40px);display:grid;grid-template-columns:1fr 1.4fr;gap:28px;align-items:center}
+.b .form h2{font-size:clamp(26px,3.2vw,36px)}
+.b .form p{color:var(--b-mute);margin-top:8px}
+.b .fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.b label{display:grid;gap:6px;font-size:13px;font-weight:700;color:var(--b-mute)}
+.b input,.b select{font:inherit;color:var(--b-ink);background:var(--b-bg);border:1px solid var(--b-line);border-radius:10px;padding:12px 14px;width:100%;min-width:0}
+.b .fields .full{grid-column:1/-1}
+.b .fields button{grid-column:1/-1;font:700 16px "DM Sans",sans-serif;background:var(--b-navy);color:var(--b-navy-ink);border:0;border-radius:10px;padding:14px;cursor:pointer}
+@media(max-width:820px){.b .form{grid-template-columns:1fr}.b .fields{grid-template-columns:1fr}}
+.b footer{margin-top:64px;padding-block:24px 96px;border-top:1px solid var(--b-line);font-size:13px;color:var(--b-mute);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.b .sticky{display:none}
+@media(max-width:820px){.b .sticky{display:grid;grid-template-columns:1fr 1fr;gap:8px;position:fixed;left:0;right:0;bottom:0;z-index:15;padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));background:var(--b-navy);border-top:1px solid var(--b-line)}
+  .b .sticky a{text-align:center;text-decoration:none;font-weight:700;padding:13px;border-radius:10px;background:var(--b-accent);color:var(--b-accent-ink)}
+  .b .sticky a+a{background:transparent;color:var(--b-navy-ink);border:1.5px solid color-mix(in srgb,var(--b-navy-ink) 45%,transparent)}}
+.wa{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:30;display:flex;align-items:center;gap:10px;background:#1fa855;color:#fff;text-decoration:none;font:700 15px "DM Sans",system-ui,sans-serif;padding:13px 18px;border-radius:99px;box-shadow:0 10px 24px -8px rgba(0,60,25,.5)}
+.wa svg{width:22px;height:22px;fill:#fff}
+body.is-b .wa{bottom:calc(76px + env(safe-area-inset-bottom,0px))}
+@media(min-width:821px){body.is-b .wa{bottom:calc(16px + env(safe-area-inset-bottom,0px))}}
+@media(max-width:480px){.wa span{display:none}.wa{padding:14px}}
+</style>
+
+<div class="bar"><div class="wrap">
+  <b>Ana sayfa önerileri</b>
+  <button id="tabA" aria-pressed="true" type="button">Tasarım A · Sakin</button>
+  <button id="tabB" aria-pressed="false" type="button">Tasarım B · Güçlü</button>
+</div></div>
+
+<!-- ===================== A ===================== -->
+<div class="a" id="viewA">
+  <div class="wrap">
+    <header class="top">
+      <div class="logo">Dr. Serap Özdamar<small>Ağız, Diş ve Çene Cerrahisi</small></div>
+      <nav><a href="#a-tedaviler">Tedaviler</a><a href="#a-hakkimda">Hakkımda</a><a href="#a-yazilar">Yazılarım</a><a href="#a-iletisim">İletişim</a></nav>
+      <a class="call" href="#a-iletisim">Randevu al</a>
+    </header>
+
+    <section class="hero">
+      <div>
+        <p class="eyebrow">Ataşehir · Uzman diş hekimi</p>
+        <h1>Sağlıklı gülüşler için, <em>uzman</em> ellerde.</h1>
+        <p class="lead">İmplant, gömük diş, çene cerrahisi ve estetik tedaviler. Her hastayı birinci derece yakınım gibi dinler, sağlığı ve estetiği birlikte planlarım.</p>
+        <div class="cta"><a class="btn" href="#a-iletisim">Randevu al</a><a class="btn ghost" href="#a-tedaviler">Tedavilere göz at</a></div>
+      </div>
+      <div class="portrait" role="img" aria-label="Dr. Serap Özdamar muayenehanesinde">
+        <div class="chip c1"><b>2012</b>Marmara Üniversitesi, Ağız-Diş-Çene Cerrahisi uzmanlığı</div>
+        <div class="chip c2"><b>14 tedavi alanı</b>Cerrahiden estetiğe</div>
+      </div>
+    </section>
+
+    <form class="quick" id="qa">
+      <h2>Sizi arayalım</h2>
+      <label>Ad soyad<input id="qa-ad" autocomplete="name" placeholder="Adınız"></label>
+      <label>Telefon<input id="qa-tel" inputmode="tel" autocomplete="tel" placeholder="05XX XXX XX XX"></label>
+      <label>Konu<select id="qa-konu"><option>İmplant tedavisi</option><option>Gömük diş çekimi</option><option>Gülüş tasarımı</option><option>Zirkonyum kaplama</option><option>Ortodonti</option><option>Kanal tedavisi</option><option>Çene eklemi</option><option>Fiyat bilgisi</option></select></label>
+      <button type="submit">Beni arayın</button>
+    </form>
+
+    <section class="tx" id="a-tedaviler">
+      <div class="tx-head"><h2>Tedaviler</h2><p>Her tedavinin süreci, risk ve iyileşme bilgisi kendi sayfasında anlatılıyor.</p></div>
+      <ul class="idx">
+        <li><a href="#a-tedaviler"><span class="n">01</span><span class="t">İmplant tedavisi</span><span class="d">Eksik dişler için kalıcı, doğal görünen çözüm.</span><span class="ar">→</span></a></li>
+        <li><a href="#a-tedaviler"><span class="n">02</span><span class="t">Sinüs lifting</span><span class="d">Üst çenede kemik yetersizliğinde implanta zemin hazırlar.</span><span class="ar">→</span></a></li>
+        <li><a href="#a-tedaviler"><span class="n">03</span><span class="t">Gömük diş çekimi</span><span class="d">Yirmi yaş dişleri ve gömülü dişler için cerrahi çekim.</span><span class="ar">→</span></a></li>
+        <li><a href="#a-tedaviler"><span class="n">04</span><span class="t">Laminate veneer</span><span class="d">Dişi aşındırmadan şekil ve renk değişimi.</span><span class="ar">→</span></a></li>
+        <li><a href="#a-tedaviler"><span class="n">05</span><span class="t">Porselen ve zirkonyum</span><span class="d">Dayanıklı, doğal dişe yakın kaplamalar.</span><span class="ar">→</span></a></li>
+        <li><a href="#a-tedaviler"><span class="n">06</span><span class="t">Ortodonti</span><span class="d">Çapraşıklık, aralık ve kapanış bozuklukları.</span><span class="ar">→</span></a></li>
+        <li><a href="#a-tedaviler"><span class="n">07</span><span class="t">Tüm tedaviler</span><span class="d">Çene kistleri, bruksizm, endodonti, lazer ve diğerleri.</span><span class="ar">→</span></a></li>
+      </ul>
+    </section>
+
+    <section class="about" id="a-hakkimda">
+      <div class="pic" role="img" aria-label="Dr. Serap Özdamar"></div>
+      <div>
+        <p class="eyebrow">Hakkımda</p>
+        <h2>Fonksiyon, sağlık ve estetik bir arada.</h2>
+        <p>2006'da İstanbul Üniversitesi Diş Hekimliği Fakültesi'nden mezun oldum, 2012'de Marmara Üniversitesi'nde Ağız, Diş ve Çene Cerrahisi uzmanlığımı tamamladım. 2024'ten beri Ataşehir'deki muayenehanemde çalışıyorum.</p>
+        <div class="facts"><div><b>2006</b>Mezuniyet</div><div><b>2012</b>Uzmanlık</div><div><b>2024</b>Kendi kliniği</div></div>
+      </div>
+    </section>
+
+    <section class="visit" id="a-iletisim">
+      <div>
+        <h2>Kliniğe gelin</h2>
+        <dl>
+          <dt>Adres</dt><dd>Barbaros Mah., Dereboyu Cad., Akzambak Sk. Varyap Meridian Grand Tower A Blok, kat 8, daire 91, Ataşehir / İstanbul</dd>
+          <dt>Telefon</dt><dd>+90 533 798 53 88</dd>
+          <dt>Hafta içi</dt><dd>09:00 – 19:00</dd>
+          <dt>Cumartesi</dt><dd>09:00 – 15:00</dd>
+          <dt>Pazar</dt><dd>Kapalı</dd>
+        </dl>
+      </div>
+      <div class="map">Harita buraya gelecek.<br>Yol tarifi için Google Haritalar bağlantısı verilecek.</div>
+    </section>
+    <footer><span>© Dr. Serap Özdamar</span><span>Instagram · Facebook · YouTube</span></footer>
+  </div>
+</div>
+
+<!-- ===================== B ===================== -->
+<div class="b" id="viewB" hidden>
+  <header class="hero">
+    <div class="wrap">
+      <div class="top">
+        <div class="logo"><i></i>Dr. Serap Özdamar</div>
+        <nav><a href="#b-tedaviler">Tedaviler</a><a href="#b-doktor">Doktorunuz</a><a href="#b-yazilar">Basında</a><a href="#b-randevu">İletişim</a></nav>
+        <a class="call" href="#b-randevu">+90 533 798 53 88</a>
+      </div>
+      <div class="copy">
+        <span class="tag">Ağız, Diş ve Çene Cerrahisi Uzmanı</span>
+        <h1>Kendini yenile. Gülüşün güvende.</h1>
+        <p class="lead">Ataşehir'de implant, gömük diş ve estetik tedavilerde uzman kadro. İlk muayenede size özel bir plan çıkarıyoruz.</p>
+        <div class="cta"><a class="btn" href="#b-randevu">Randevu al</a><a class="btn ghost" href="#b-tedaviler">Tedaviler</a></div>
+      </div>
+    </div>
+  </header>
+  <div class="strip"><div class="wrap">
+    <div><b>2006</b>İstanbul Üniv. Diş Hekimliği</div>
+    <div><b>2012</b>Marmara Üniv. uzmanlık</div>
+    <div><b>Ataşehir</b>Varyap Meridian, kat 8</div>
+    <div><b>Pzt–Cmt</b>09:00'dan itibaren</div>
+  </div></div>
+
+  <div class="wrap">
+    <section id="b-tedaviler">
+      <div class="group"><h2>Cerrahi</h2><p>Kemik, diş eti ve çene bölgesinde planlı ve güvenli müdahaleler.</p>
+        <div class="grid">
+          <a class="tile" href="#b-tedaviler"><b>İmplant tedavisi</b><span>Kalıcı diş kökü</span></a>
+          <a class="tile" href="#b-tedaviler"><b>Sinüs lifting</b><span>Üst çene kemik desteği</span></a>
+          <a class="tile" href="#b-tedaviler"><b>İleri implant cerrahisi</b><span>Kemik kaybı olan vakalar</span></a>
+          <a class="tile" href="#b-tedaviler"><b>Gömük diş çekimi</b><span>Yirmi yaş dişleri</span></a>
+          <a class="tile" href="#b-tedaviler"><b>Çene kistleri</b><span>Teşhis ve cerrahi</span></a>
+          <a class="tile" href="#b-tedaviler"><b>Endodontik cerrahi</b><span>Apikal rezeksiyon</span></a>
+        </div>
+      </div>
+      <div class="group"><h2>Estetik ve protez</h2><p>Şekil, renk ve çiğneme işlevini birlikte düşünen tedaviler.</p>
+        <div class="grid">
+          <a class="tile" href="#b-tedaviler"><b>Laminate veneer</b><span>İnce porselen yüzey</span></a>
+          <a class="tile" href="#b-tedaviler"><b>Porselen / zirkonyum</b><span>Dayanıklı kaplama</span></a>
+          <a class="tile" href="#b-tedaviler"><b>Diş protezleri</b><span>Sabit ve hareketli</span></a>
+          <a class="tile" href="#b-tedaviler"><b>Protez öncesi cerrahi</b><span>Zemin hazırlığı</span></a>
+        </div>
+      </div>
+      <div class="group"><h2>Tedavi ve koruma</h2><p>Dişi ve çevre dokuyu korumaya yönelik tedaviler.</p>
+        <div class="grid">
+          <a class="tile" href="#b-tedaviler"><b>Endodonti</b><span>Kanal tedavisi</span></a>
+          <a class="tile" href="#b-tedaviler"><b>Ortodonti</b><span>Diş ve çene hizalama</span></a>
+          <a class="tile" href="#b-tedaviler"><b>Bruksizm ve çene eklemi</b><span>Diş sıkma, TME</span></a>
+          <a class="tile" href="#b-tedaviler"><b>Lazer uygulamaları</b><span>Yumuşak ve sert doku</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="doc" id="b-doktor">
+      <div class="pic" role="img" aria-label="Dr. Serap Özdamar muayenehanesinde"></div>
+      <div class="txt">
+        <q>Her hastamı birinci derece yakınım olarak kabul ederim.</q>
+        <h2>Dr. Serap Özdamar</h2>
+        <p>Ağız, Diş ve Çene Cerrahisi Uzmanı. Uzun yıllar farklı kliniklerde çalıştıktan sonra 2024'te Ataşehir'de kendi muayenehanesini açtı. Tedavi planını fonksiyon, sağlık ve estetik üçlüsüne göre yapar.</p>
+      </div>
+    </section>
+
+    <section class="form" id="b-randevu">
+      <div><h2>Sizi arayalım</h2><p>Adınızı ve numaranızı bırakın, aynı gün içinde dönüş yapalım.</p></div>
+      <form class="fields" id="qb">
+        <label>Ad soyad<input id="qb-ad" autocomplete="name" placeholder="Adınız"></label>
+        <label>Telefon<input id="qb-tel" inputmode="tel" autocomplete="tel" placeholder="05XX XXX XX XX"></label>
+        <label class="full">Konu<select id="qb-konu"><option>İmplant tedavisi</option><option>Gömük diş çekimi</option><option>Gülüş tasarımı</option><option>Zirkonyum kaplama</option><option>Ortodonti</option><option>Kanal tedavisi</option><option>Çene eklemi</option><option>Fiyat bilgisi</option></select></label>
+        <button type="submit">Randevu talebi gönder</button>
+      </form>
+    </section>
+    <footer><span>Barbaros Mah., Dereboyu Cad., Varyap Meridian A Blok kat 8 d. 91, Ataşehir</span><span>© Dr. Serap Özdamar</span></footer>
+  </div>
+  <div class="sticky"><a href="#b-randevu">Randevu al</a><a href="#b-randevu">Ara</a></div>
+</div>
+
+<a class="wa" href="https://wa.me/905337985388?text=Merhaba%2C%20randevu%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm5.8 14.2c-.2.7-1.4 1.3-1.9 1.3-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5-4.5-.2-.2-1.2-1.6-1.2-3s.8-2.1 1-2.4c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.2-.3.3-.1.6.2.3.7 1.2 1.6 1.9 1.1 1 2 1.3 2.3 1.4.3.1.4.1.6-.1l.8-1c.2-.3.4-.2.6-.1l2 1c.3.1.5.2.5.3.1.2.1.8-.1 1.4z"/></svg><span>WhatsApp'tan yazın</span></a>
+<script>
+(function(){
+  var A=document.getElementById('viewA'),B=document.getElementById('viewB'),tA=document.getElementById('tabA'),tB=document.getElementById('tabB');
+  function show(w){var b=w==='B';A.hidden=b;B.hidden=!b;document.body.classList.toggle('is-b',b);tA.setAttribute('aria-pressed',String(!b));tB.setAttribute('aria-pressed',String(b));try{localStorage.setItem('tasarim',w)}catch(e){}window.scrollTo(0,0)}
+  tA.onclick=function(){show('A')};tB.onclick=function(){show('B')};
+  try{if(localStorage.getItem('tasarim')==='B')show('B')}catch(e){}
+  ['qa','qb'].forEach(function(id){document.getElementById(id).addEventListener('submit',function(e){e.preventDefault()})});
+})();
+</script>
