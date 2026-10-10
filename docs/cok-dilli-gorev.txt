@@ -1,0 +1,71 @@
+GÖREV: Dr. Serap Özdamar sitesine İngilizce (EN) ve Almanca (DE) dil desteği eklemek
+=====================================================================================
+Bu dosya, projeyi daha önce kuran Claude tarafından yazıldı. Projeyi ilk kez görüyorsan önce baştan sona oku.
+
+1) PROJE NEDİR
+- Dr. Serap Özdamar (Ağız, Diş ve Çene Cerrahisi Uzmanı, Ataşehir/İstanbul) diş kliniği web sitesi.
+- Laravel 13, PHP 8.3, MySQL. Kendi yönetim paneli var (/yonetim). WordPress'ten taşındı.
+- Depo: GitHub serhatmoroglu/Serapmoroglu_website, dal: claude/festive-johnson-3sdq52 (başka dala push etme).
+- README.md ve DEPLOY.md'yi oku. Eski sitenin ham içeriği _kaynak/ altında, içerik aktarım betiği _kaynak/extract.py.
+- Varsayılan dil Türkçe (TR). Mevcut tüm Türkçe adresler (/tedaviler/..., /yazilar/..., /iletisim vb.) AYNEN ve değişmeden kalmalı
+  (SEO ve eski WordPress ?page_id=N yönlendirmeleri config/clinic.php içinde, bunlar bozulmamalı).
+
+2) KISITLAR (çok önemli, barındırma ortamı)
+- Yayın ortamı İHS paylaşımlı hosting: sadece PHP 8.3 + MySQL. SSH YOK, composer/npm/node çalıştırılamaz, derleme adımı eklenemez.
+  Tüm bağımlılıklar yerelde kurulup tools/build-release.sh ile zip'e konur. Yeni PHP paketi eklersen zip'e girdiğinden emin ol, ama mümkünse paket ekleme.
+- MySQL eski ayarlı olabilir (MyISAM, anahtar sınırı 1000 bayt). AppServiceProvider'da Schema::defaultStringLength(191) var, unique/index
+  kullanan string sütunlar 191 karakteri geçmemeli. Yeni migration'ları MyISAM'de de deneyerek yaz (kuyruk/önbellek tabloları kullanılmıyor;
+  oturum ve önbellek dosyada, kuyruk sync).
+- Hosting panelinden nokta ile başlayan dosyalar (.env) düzenlenemiyor/yüklenemiyor. .env dosyasına dokunma, yeni ayar gerekirse
+  veritabanındaki settings tablosunu ve admin panelini kullan.
+- Veritabanı değişikliği = yeni migration dosyası. Kurulum ve güncelleme /kur sayfası (InstallController) ile tek seferlik çalışır;
+  DatabaseSeeder içindeki updateOrCreate'ler mevcut içeriği SIFIRLAR. Canlı sitede içerik düzenlenmiş olabilir, bu yüzden:
+  yeni dil verilerini seed ile değil, canlıdaki içeriği silmeyecek şekilde (firstOrCreate / sadece boş çeviriler) ekle.
+  Canlı sitenin güncellenmesi için yeni zip yerine küçük "yama zip"leri kullanılıyor (yalnızca değişen dosyalar laravel/ yoluyla).
+- Dosya yüklemeleri public/uploads/YYYY/MM altına gider (panelden). public/uploads/eski eski siteden aktarılan görseller.
+- Derleme yok: CSS/JS elle yazılmış (public/css/site.css, public/css/admin.css, public/js/site.js). Framework/bundler ekleme.
+
+3) İSTENEN
+a) Sitenin TÜM herkese açık sayfaları EN ve DE olarak da yayınlansın:
+   ana sayfa, tedaviler (liste + 14 tedavi sayfası), yazılar (liste + 8 yazı), basında biz (gazete haberleri + videolar),
+   kliniğimiz, hakkımızda, iletişim, randevu, formlar ve form mesajları, hata sayfaları (404), alt bilgi, menü, SEO başlık/açıklama.
+b) URL yapısı önerisi: TR kök adreslerde kalsın (/, /tedaviler/...). EN için /en/..., DE için /de/... öneki. Tedavi/yazı slug'ları
+   çevrilmiş olsun (örn. /en/treatments/dental-implant, /de/behandlungen/zahnimplantat), her dilin kendi slug'ı veritabanında tutulsun.
+   Sayfalara <link rel="alternate" hreflang="tr|en|de|x-default">, dile göre <html lang>, canonical ve sitemap.xml'e üç dil ekle.
+c) Menüde dil değiştirici (TR | EN | DE): kullanıcıyı aynı sayfanın diğer dildeki karşılığına götürsün. Dil otomatik yönlendirme yapma
+   (Google için zararlı), sadece seçim linki olsun.
+d) İçerik YÖNETİMİ admin panelden yapılabilmeli (kullanıcı kod bilmiyor): tedavi, yazı, gazete/video başlık-özet-gövde ile
+   ana sayfa/hakkımda/klinik/iletişim metinleri ve tüm ayar metinleri (settings tablosu: hero_title, hero_lead, doctor_quote vb.)
+   her dil için ayrı alan olarak düzenlenebilsin. Çeviri yoksa Türkçeye düş (fallback) ve sayfada boş görünmesin.
+   Telefon, WhatsApp, adres, saatler dilden bağımsız tek kayıt kalsın.
+e) Çeviriler: Tüm mevcut Türkçe içeriğin (14 tedavi, 8 yazı, 7 gazete haberi başlığı/özeti, 2 video başlığı, sayfa metinleri, form metinleri,
+   arayüz yazıları) profesyonel, tıbbi terimlerde doğru İngilizce ve Almanca çevirisini sen yap ve başlangıç verisi olarak ekle.
+   Hasta bilgilendirme metni olduğu için tıbbi iddiaları değiştirme, abartma; anlam kaybetme. Dr. Serap Özdamar adı/unvanı korunur.
+   Almanca için resmi hitap (Sie) kullan.
+f) Arayüz sabit metinleri (menü, buton, form etiketi, doğrulama mesajları, "Randevu al", "WhatsApp'tan yazın" vb.) lang/tr, lang/en, lang/de
+   dosyalarına çıkarılsın (Laravel çeviri sistemi). Şu an bu metinler Blade dosyalarına doğrudan Türkçe gömülü.
+g) Formlar (arayin/randevu/iletisim): talepler hangi dilde gönderildiyse leads tablosuna dil bilgisi de kaydedilsin (yeni sütun, migration),
+   admin panelde talep listesinde görünsün. Form hataları ve başarı mesajı kullanıcının dilinde olsun. WhatsApp hazır mesajı
+   dile göre değişsin (ayar: whatsapp_message için dil karşılıkları).
+h) Yönetim paneli arayüzü Türkçe kalsın; sadece içerik alanları çok dilli olsun.
+
+4) ÖNERİLEN TEKNİK YAKLAŞIM (daha iyisini bulursan açıkla ve onunla ilerle)
+- Basit ve bağımlılıksız: treatments/posts tablolarına title_en, title_de, slug_en, slug_de, summary_*, body_*, excerpt_*, meta_description_* sütunları
+  YA DA ayrı bir "translations" tablosu (model, id, locale, alan, değer). 191 karakter anahtar sınırına dikkat.
+  settings tablosuna "hero_title.en" gibi anahtar öneki ile her dil ekleme (Setting::get($key) dil duyarlı olsun, yoksa TR).
+- Route: dil öneki grubu (prefix 'en' / 'de'), SetLocale middleware'i. TR varsayılan, önek yok. helpers.php içine localized_route()/dil linki yardımcıları.
+- Mevcut route isimlerini bozma (admin tarafı da kullanıyor). Eski WordPress yönlendirmeleri (HomeController/PageController içindeki ?page_id=) TR'ye gitmeye devam etsin.
+- Admin form'larında dil sekmeleri (TR | EN | DE), mevcut Quill editörü (public/vendor/quill) her dil için ayrı alanda çalışsın.
+
+5) TEST / TESLİM
+- Yerelde çalıştır: composer install; cp .env.example .env; php artisan key:generate; php artisan migrate:fresh --seed; php artisan serve
+  (MySQL ile de dene; MyISAM davranışı için MySQL'de default_storage_engine=MyISAM yapıp migrate:fresh dene).
+- Playwright ile masaüstü ve mobil ekran görüntüsü al, üç dilde ana sayfa, tedavi sayfası, form gönderimi, dil değiştirici, admin dil sekmeleri
+  ve /sitemap.xml'i doğrula. Uzun Almanca kelimelerin mobilde taşmadığını kontrol et.
+- Bittiğinde: tools/build-release.sh https://drserapozdamar.com çalıştır -> release/serapozdamar-site.zip (sıfırdan kurulum paketi).
+  Canlı site zaten kuruluysa ayrıca SADECE değişen dosyaları ve YENİ migration'ı içeren küçük bir "yama zip" hazırla
+  (laravel/ yoluyla; kullanıcı panelden zip'i yükleyip açıyor) ve yeni migration'ı çalıştırmanın yolunu açıkla
+  (kullanıcı SSH kullanamıyor; /kur sayfası sadece ilk kurulumda çalışır, kilitlidir. Güvenli bir "güncelle" adımı gerekiyorsa
+  token'lı, sadece 'migrate' çalıştıran ayrı bir rota ekle, seed çalıştırma, canlı içeriği silme).
+- Kullanıcıya adım adım, kısa ve teknik olmayan Türkçe anlat. Kullanıcı kod bilmiyor, İHS panelini ve dosya yöneticisini kullanıyor.
+- Commit mesajlarını Türkçe yaz, dalı claude/festive-johnson-3sdq52 olarak koru. Pull request açma (kullanıcı istemedikçe).
